@@ -2,7 +2,7 @@
 
 	<footer class="footer">
 
-		Sva prava zadrzava <?php echo date("Y"); ?>
+		Sva prava zadrzana <?php echo date("Y"); ?>
 
 	</footer>
 
