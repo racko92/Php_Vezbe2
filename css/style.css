@@ -25,3 +25,69 @@ body{
 .main{
 	text-align: center;
 }
+
+.form{
+	display: flex;
+	flex-direction: column;
+	width: 30%;
+	margin: auto;
+	padding: 10%;
+}
+
+.form-group{
+	justify-content: space-between;
+	display: flex;
+	margin: 10px;
+}
+
+.form-group *{
+	justify-content: space-around;
+
+}
+
+.form-group input{
+	height: 20px;
+}
+
+.form-submit{
+	display: flex;
+	flex-direction: row-reverse;
+	width: 100%;
+}
+
+.form-submit button{
+	justify-content: space-between;
+	border: 1px solid black;
+	border-radius: 5px;
+	background-color: white;
+	padding-left: 10%;
+	padding-right: 10%;
+	color: black;
+	font-size: 20px;
+}
+
+.form-submit button:hover{
+	justify-content: space-between;
+	border: 1px solid black;
+	border-radius: 5px;
+	background-color: white;
+	padding-left: 10%;
+	padding-right: 10%;
+	color: black;
+	font-size: 20px;
+}
+
+.form-submit button:hover{
+	background-color: blue;
+	color: white;
+}
+
+@media screen and (max-width: 1000px){
+	.form{
+		display: flex;
+		flex-direction: column;
+		width: 50%;
+		margin: auto;
+		padding: 30%
+	}
+}
