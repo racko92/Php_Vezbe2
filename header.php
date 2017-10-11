@@ -1,8 +1,3 @@
-<?php 
-
-	session_start();
-
-?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,12 +13,13 @@
 
 				if(!empty($_SESSION)) {
 					echo '<a href="logout.php">Logout</a>';
+					echo "<a class=\"deactivated\" href=\"#\">User: " . $_SESSION['firstName'] . " " . $_SESSION['lastName'] . "</a>";
 				}
 				else {
 					echo '<a href="login.php">Login</a>';
+					echo '<a href="register.php">Register</a>';	
 				}
 
 			?>
-			<a href="register.php">Register</a>
 		</nav>
 	</header>

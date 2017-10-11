@@ -1,19 +1,15 @@
 <?php 
+
+	session_start();
 	include 'header.php';
 
-?>
 
-<main class="main">
-	
-<?php 
+	echo '<main class="main">';
 
 
 	echo "<h2>Welcome " . $_SESSION['firstName'] . "</h2>";
 
-?>
+	echo '</main>';
 
-</main>
-
-<?php 
 	include 'footer.php'
  ?>

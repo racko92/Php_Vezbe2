@@ -2,6 +2,10 @@ body{
 	border: none;
 	margin: none;
 	padding: none;
+    display: flex;
+  	min-height: 95vh;
+  	flex-direction: column;
+  	justify-content: space-between;
 }
 
 .nav{
@@ -21,9 +25,10 @@ body{
 }
 
 .footer{
+
 	text-align: center;
 	border-top: 1px solid black;
-	padding-top: 10px; 
+	padding-top: 10px;
 }
 
 .main{
@@ -84,6 +89,17 @@ body{
 .form-submit button:hover{
 	background-color: blue;
 	color: white;
+}
+
+.deactivated{
+    pointer-events: none;
+    cursor: default;
+    text-decoration: none;
+    color: black;
+}
+
+.error{
+	text-align: center;
 }
 
 @media screen and (max-width: 1000px){
