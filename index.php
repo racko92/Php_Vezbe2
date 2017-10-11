@@ -4,7 +4,14 @@
 ?>
 
 <main class="main">
-	<h1>Dobrodosao</h1>
+	
+<?php 
+
+
+	echo "<h2>Welcome " . $_SESSION['firstName'] . "</h2>";
+
+?>
+
 </main>
 
 <?php 

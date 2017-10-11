@@ -31,6 +31,7 @@
 	}),";");
 	$rawUsers = explode("\n", file_get_contents('users.txt'));
 	$oldUser = array();
+
 	foreach($rawUsers as $value){
 		$oldUsers[] = explode(";", $value);
 	}
@@ -52,7 +53,14 @@
 	}
 	if(!empty($_POST)){
 		file_put_contents("users.txt", $users . "\n", FILE_APPEND);
-		header('Location: index.php');
+
+		$_SESSION = [
+					'firstName' => $_POST['firstName'],
+					'lastName' => $_POST['lastName'],
+					'email' => $_POST['email']
+				];
+
+		header('Location: home.php');
 
 	}
 

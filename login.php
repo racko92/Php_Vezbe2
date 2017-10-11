@@ -18,6 +18,42 @@
 		</div>
 	</form>
 </main>
+<?php 
+	$filename = "users.txt";
+	$handle = fopen($filename, "r");
+	$contents = fread($handle, filesize($filename));
+
+	$usersRaw = explode("\n", $contents);
+	$users = array();
+
+	foreach ($usersRaw as $value) {
+
+		if (isset($value) && $value != "") {
+			$users[] = explode(";", $value);
+		}
+
+	}
+
+	if (isset($_POST) && !empty($_POST)) {
+		
+		foreach($users as $value) {
+
+			if($_POST['email'] == $value[2] && $_POST['password'] == $value[3]) {
+				$_SESSION = [
+					'firstName' => $value[0],
+					'lastName' => $value[1],
+					'email' => $value[2]
+				];
+
+
+			header('Location: home.php');
+			}
+
+		}
+	} 
+
+?>
+
 
 <?php 
 	include 'footer.php'
