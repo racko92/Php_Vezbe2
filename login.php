@@ -1,7 +1,5 @@
 <?php 
-	
 	session_start();
-	include 'header.php';
 
 	$filename = "users.txt";
 	$handle = fopen($filename, "r");
@@ -22,31 +20,38 @@
 		
 		if (empty($_POST['email'])) {
 
-			echo "<p class=\"error\">Email cannot be empty.</p>";
-			goto html;
+			$error = "<p class=\"error\">Email cannot be empty.</p>";
 		}
 		else if (empty($_POST['password'])) {
 
-			echo "<p class=\"error\">Password cannot be empty.</p>";
-			goto html;
+			$error = "<p class=\"error\">Password cannot be empty.</p>";
 		}
 
-		foreach($users as $value) {
+		if (empty($error)){
 
-			if ($_POST['email'] === $value[2] && $_POST['password'] === $value[3]) {
-				$_SESSION = [
-					'firstName' => $value[0],
-					'lastName' => $value[1],
-					'email' => $value[2]
-				];
-			header('Location:home.php');
+			foreach($users as $value) {
+
+				if ($_POST['email'] === $value[2] && $_POST['password'] === $value[3]) {
+					$_SESSION = [
+						'firstName' => $value[0],
+						'lastName' => $value[1],
+						'email' => $value[2]
+					];
+				header('Location:home.php');
+				}
 			}
+
+		$error = "<p class=\"error\">Invalid credentials! Please try again.</p>";
 		}
 
-		echo "<p class=\"error\">Invalid credentials! Please try again.</p>";
 
 	} 
-html:
+?>
+<?php
+	include "./navigation.php";
+	if(!empty($error)){
+		echo $error;
+	}
 ?>
 <main class="main">
 

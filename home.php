@@ -1,7 +1,7 @@
 <?php 
 
 	session_start();
-	include 'header.php';
+	include 'navigation.php';
 
 
 	echo '<main class="main">';

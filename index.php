@@ -1,7 +1,7 @@
 <?php 
 
 	session_start();
-	include 'header.php';
+	include 'navigation.php';
 
 
 	echo '<main class="main">';
@@ -11,5 +11,6 @@
 
 	echo '</main>';
 
-	include 'footer.php'
+	include 'footer.php';
+
  ?>
