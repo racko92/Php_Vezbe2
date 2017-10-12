@@ -2,9 +2,7 @@
 
 	session_start();
 
-	$users = implode(array_filter($_POST,function($num){
-		return $num;
-	}),";");
+
 	$rawUsers = explode("\n", file_get_contents('users.txt'));
 	$oldUser = array();
 
@@ -12,7 +10,8 @@
 		$oldUsers[] = explode(";", $value);
 	}
 
-	if(isset($_POST)){
+	if(isset($_POST) && !empty($_POST)){
+
 		foreach ($_POST as $key => $value){
 
 			if(!isset($value) || $value === ""){
@@ -25,13 +24,24 @@
 				}
 			}
 
-			if($_POST['captcha'] !== $_SESSION['captcha']) {
+			if($_POST['captcha'] !== $_SESSION['captcha'] && isset($_POST['captcha'])) {
 				$error = ("<p class=\"error\">Wrong captcha!</p>");
+			}
+			else{
+				unset($_POST['captcha']);
 			}
 
 		}
 	}
 	if(!empty($_POST) && empty($error)){
+
+		$password = $_POST['password'];
+		$_POST['password'] = crypt($password);
+		
+		$users = implode(array_filter($_POST,function($num){
+			return $num;
+		}),";");
+
 		file_put_contents("users.txt", $users . "\n", FILE_APPEND);
 		session_unset();
 		$_SESSION = [
@@ -83,14 +93,14 @@
 			    	 $_SESSION['captcha'] = $randomString;
 			    }
 			    if(isset($_SESSION['captcha'])){
-			    	session_unset();
+			    	unset($_SESSION['captcha']);
 					$_SESSION['captcha'] = $randomString;
 			    }
 
 			?>
-			<label for="captcha"><?php echo "Captcha: " . $_SESSION['captcha']; ?></label>
+			<label for="captcha" ><?php echo "Captcha: " . $_SESSION['captcha']; ?></label>
 			<input type="text" name="captcha">
-		</div>
+		</div> 
 		<div class="form-submit">
 			<button type="submit">Register</button>
 		</div>

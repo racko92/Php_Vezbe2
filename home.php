@@ -1,10 +1,10 @@
 <?php 
 
 	session_start();
+
 	include 'navigation.php';
 
-
-	echo '<main class="main">';
+	echo "<main class=\"main\">";
 	$filename = "users.txt";
 	$handle = fopen($filename, "r");
 	$contents = fread($handle, filesize($filename));
@@ -27,14 +27,11 @@
 
 		echo "First Name: " . $user[0] . "<br>";
 		echo "Last Name: " . $user[1] . "<br>";
-
 		echo "<br>";
 	}
 
-	echo '</main>';
-
+	echo "</main>";
  ?>
-
 <?php 
 	include 'footer.php';
 ?>

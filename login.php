@@ -1,12 +1,17 @@
 <?php 
 	session_start();
-
+	
 	$filename = "users.txt";
 	$handle = fopen($filename, "r");
 	$contents = fread($handle, filesize($filename));
 
 	$usersRaw = explode("\n", $contents);
 	$users = array();
+
+	if(empty($_SESSION['invalid'])){
+
+		$_SESSION['invalid'] = 3;
+	}
 
 	foreach ($usersRaw as $value) {
 
@@ -20,18 +25,20 @@
 		
 		if (empty($_POST['email'])) {
 
-			$error = "<p class=\"error\">Email cannot be empty.</p>";
+			$error[] = "<p class=\"error\">Email cannot be empty.</p>";
 		}
 		else if (empty($_POST['password'])) {
 
-			$error = "<p class=\"error\">Password cannot be empty.</p>";
+			$error[] = "<p class=\"error\">Password cannot be empty.</p>";
 		}
 
 		if (empty($error)){
 
+			$password = $_POST['password'];
+
 			foreach($users as $value) {
 
-				if ($_POST['email'] === $value[2] && $_POST['password'] === $value[3]) {
+				if ($_POST['email'] === $value[2] && crypt($password, $value[3]) === $value[3]) {
 					$_SESSION = [
 						'firstName' => $value[0],
 						'lastName' => $value[1],
@@ -41,16 +48,42 @@
 				}
 			}
 
-		$error = "<p class=\"error\">Invalid credentials! Please try again.</p>";
+		$error[] = "<p class=\"error\">Invalid credentials! Please try again.</p>";
+		}
+	} 
+
+?>
+<?php
+	include "navigation.php";
+	if(!empty($error)){
+
+		if(isset($_SESSION['invalid'])){
+			$_SESSION['invalid'] -= 1;
+		}
+
+		if($_SESSION['invalid'] <= 3 && $_SESSION['invalid'] > 1) {
+			echo "<p class=\"error\">" . $_SESSION['invalid'] . " tries left. You will have to wait 5 minutes before trying again!</p>";
+		}
+		else if($_SESSION['invalid'] === 1) {
+			echo "<p class=\"error\">" . $_SESSION['invalid'] . " try left. Choose wisely!</p>";
+		}
+
+		if(isset($_SESSION['invalid']) && $_SESSION['invalid'] === 0){
+
+			$_SESSION['timeout'] = true;
+
+			if($_SESSION['timeout'] === true){
+				sleep(10);
+				$_SESSION['timeout'] = false;
+				unset($error);
+				unset($_SESSION);
+			}
 		}
 
 
-	} 
-?>
-<?php
-	include "./navigation.php";
-	if(!empty($error)){
-		echo $error;
+		foreach($error as $value){
+			echo $value;
+		}
 	}
 ?>
 <main class="main">
@@ -73,5 +106,5 @@
 
 
 <?php 
-	include 'footer.php'
+	include 'footer.php';
  ?>
