@@ -98,6 +98,14 @@ body{
     color: black;
 }
 
+.captcha{
+	border: 1px solid red;
+	text-align: center;
+	padding: 5px;
+	font-size: 20px;
+	font-weight: bold;
+}
+
 .error{
 	text-align: center;
 }

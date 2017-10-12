@@ -98,7 +98,8 @@
 			    }
 
 			?>
-			<label for="captcha" ><?php echo "Captcha: " . $_SESSION['captcha']; ?></label>
+			<label for="captcha" >Captcha: </label>
+			<div class="captcha" onselectstart="return false"><?php echo $_SESSION['captcha']; ?></div>
 			<input type="text" name="captcha">
 		</div> 
 		<div class="form-submit">
