@@ -99,8 +99,8 @@
 
 			?>
 			<label for="captcha" >Captcha: </label>
-			<div class="captcha" onselectstart="return false"><?php echo $_SESSION['captcha']; ?></div>
-			<input type="text" name="captcha">
+			<div class="captcha" onselectstart="return false" onCopy="return false" onDrag="return false" onDrop="return false" onPaste="return false" autocomplete=off><?php echo $_SESSION['captcha']; ?></div>
+			<input type="text" name="captcha" onselectstart="return false" onCopy="return false" onDrag="return false" onDrop="return false" onPaste="return false" autocomplete=off>
 		</div> 
 		<div class="form-submit">
 			<button type="submit">Register</button>
