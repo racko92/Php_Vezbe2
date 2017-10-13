@@ -6,8 +6,12 @@
 
 	echo '<main class="main">';
 
-
-	echo "<h2>Welcome " . $_SESSION['firstName'] . "</h2>";
+	if(!empty($_SESSION['firstName'])){
+		echo "<h2>Welcome " . $_SESSION['firstName'] . "</h2>";	
+	}
+	else{
+		echo "<h2>Welcome guest</h2>";
+	}
 
 	echo '</main>';
 

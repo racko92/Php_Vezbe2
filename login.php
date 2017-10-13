@@ -1,6 +1,23 @@
 <?php 
 	session_start();
-	
+
+	const LOGIN_TIMES = 2;
+
+	if (!isset($_SESSION['invalid'])) {
+		$_SESSION['invalid'] = LOGIN_TIMES;
+	}
+
+	if($_SESSION['invalid'] <= 0){
+
+		$_SESSION['timeout'] = date('H:i:s', time() + 30);
+	}
+
+
+	if($_SESSION['timeout'] > date('H:i:s')){
+
+			header('Location:timeout.php');
+	}
+
 	$filename = "users.txt";
 	$handle = fopen($filename, "r");
 	$contents = fread($handle, filesize($filename));
@@ -8,11 +25,7 @@
 	$usersRaw = explode("\n", $contents);
 	$users = array();
 
-	if(empty($_SESSION['invalid'])){
-
-		$_SESSION['invalid'] = 3;
-	}
-
+	
 	foreach ($usersRaw as $value) {
 
 		if (isset($value) && $value != "") {
@@ -22,13 +35,11 @@
 	}
 
 	if (isset($_POST) && !empty($_POST)) {
-		
-		if (empty($_POST['email'])) {
 
+		if (empty($_POST['email'])) {
 			$error[] = "<p class=\"error\">Email cannot be empty.</p>";
 		}
 		else if (empty($_POST['password'])) {
-
 			$error[] = "<p class=\"error\">Password cannot be empty.</p>";
 		}
 
@@ -52,34 +63,13 @@
 		}
 	} 
 
-?>
-<?php
 	include "navigation.php";
+
 	if(!empty($error)){
 
-		if(isset($_SESSION['invalid'])){
-			$_SESSION['invalid'] -= 1;
-		}
 
-		if($_SESSION['invalid'] <= 3 && $_SESSION['invalid'] > 1) {
-			echo "<p class=\"error\">" . $_SESSION['invalid'] . " tries left. You will have to wait 5 minutes before trying again!</p>";
-		}
-		else if($_SESSION['invalid'] === 1) {
-			echo "<p class=\"error\">" . $_SESSION['invalid'] . " try left. Choose wisely!</p>";
-		}
-
-		if(isset($_SESSION['invalid']) && $_SESSION['invalid'] === 0){
-
-			$_SESSION['timeout'] = true;
-
-			if($_SESSION['timeout'] === true){
-				sleep(10);
-				$_SESSION['timeout'] = false;
-				unset($error);
-				unset($_SESSION);
-			}
-		}
-
+		$error[] =  "<p class=\"error\">" . $_SESSION['invalid'] . " tries left. You will have to wait 5 minutes before trying again!</p>";
+		$_SESSION['invalid']--;		
 
 		foreach($error as $value){
 			echo $value;
